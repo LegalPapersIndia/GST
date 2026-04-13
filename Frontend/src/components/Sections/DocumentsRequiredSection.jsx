@@ -1,10 +1,10 @@
 // src/components/Sections/DocumentsRequiredSection.jsx
 
-import pan from "../../Assest/pan.jpg";
+import pan from "../../Assest/Pan.jpg";
 import aadhar from "../../Assest/aadhaar.jpg";
 import photo from "../../Assest/profile.jpg";
 import business from "../../Assest/Bussiness.webp";
-import address from "../../Assest/address.webp";   // ← Isme change kar sakte ho agar alag image hai
+import address from "../../Assest/address.webp";  
 
 export default function DocumentsRequiredSection() {
   const documents = [
