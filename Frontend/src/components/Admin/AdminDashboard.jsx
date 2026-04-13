@@ -12,43 +12,44 @@ export default function AdminDashboard() {
   const navigate = useNavigate();
   const API_URL = import.meta.env.VITE_API_URL;
 
-const fetchLeads = async () => {
-  try {
-    const credentials = sessionStorage.getItem('adminCredentials');
-    if (!credentials) {
-      navigate('/admin');
-      return;
+  // Fetch leads
+  const fetchLeads = async () => {
+    try {
+      const credentials = sessionStorage.getItem('adminCredentials');
+      
+      if (!credentials) {
+        sessionStorage.clear();
+        navigate('/admin');
+        return;
+      }
+
+      const response = await fetch(`${API_URL}/api/leads`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Basic ${credentials}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.status === 401) {
+        sessionStorage.clear();
+        alert("Session expired. Please login again.");
+        navigate('/admin');
+        return;
+      }
+
+      if (!response.ok) throw new Error(`Server Error: ${response.status}`);
+
+      const data = await response.json();
+      setLeads(Array.isArray(data) ? data : []);
+      
+    } catch (error) {
+      console.error('Fetch Leads Error:', error);
+      alert("Unable to fetch leads. Please check if backend is running.");
+    } finally {
+      setLoading(false);
     }
-
-    const response = await fetch(`${API_URL}/api/leads`, {   // ← /api/leads
-      method: 'GET',
-      headers: {
-        'Authorization': `Basic ${credentials}`,
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (response.status === 401) {
-      sessionStorage.clear();
-      alert("Session expired. Please login again.");
-      navigate('/admin');
-      return;
-    }
-
-    if (!response.ok) {
-      throw new Error(`Server Error: ${response.status}`);
-    }
-
-    const data = await response.json();
-    setLeads(Array.isArray(data) ? data : []);
-    
-  } catch (error) {
-    console.error('Fetch Leads Error:', error);
-    alert("Unable to fetch leads. Please check backend.");
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   useEffect(() => {
     const isLoggedIn = sessionStorage.getItem('adminLoggedIn');

@@ -10,13 +10,16 @@ const limiter = rateLimit({
   max: 100
 });
 
-// POST /api/leadRoutes
+// ======================
+// Public Form Submission - ONLY Database Save
+// ======================
 router.post('/leadRoutes', limiter, async (req, res) => {
   const payload = req.body;
 
   try {
     const lead = new Lead({
       rawPayload: payload,
+
       application_type: payload.application_type,
       applicant_name: payload.applicant_name,
       email: payload.email,
@@ -39,25 +42,34 @@ router.post('/leadRoutes', limiter, async (req, res) => {
     });
 
     await lead.save();
-    console.log(`✅ Lead Saved: ${lead.applicant_name || 'Unknown'}`);
 
-    res.status(200).json({ success: true, message: 'Lead saved' });
+    console.log(`✅ GST Lead Saved in Database: ${lead.applicant_name || 'Unknown'}`);
 
-  } catch (err) {
-    console.error('❌ Save Error:', err);
-    res.status(500).json({ success: false, message: 'Database error' });
+    res.status(200).json({ 
+      success: true, 
+      message: 'Lead saved successfully in database' 
+    });
+
+  } catch (dbErr) {
+    console.error('❌ Database Save Failed:', dbErr);
+    return res.status(500).json({ 
+      success: false, 
+      message: 'Database save failed' 
+    });
   }
 });
 
-// GET /api/leads
+// ======================
+// Admin Route - View All Leads
+// ======================
 const adminAuth = require('../middleware/adminAuth');
 
-router.get('/leads', adminAuth, async (req, res) => {
+router.get('/api/leads', adminAuth, async (req, res) => {
   try {
     const leads = await Lead.find().sort({ submittedAt: -1 });
     res.json(leads);
   } catch (err) {
-    console.error('❌ Fetch Leads Error:', err);
+    console.error('❌ Error fetching leads:', err);
     res.status(500).json({ error: 'Failed to fetch leads' });
   }
 });
