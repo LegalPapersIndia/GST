@@ -3,7 +3,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { FaArrowUp, FaEnvelope, FaPhoneAlt } from "react-icons/fa";
 
-import Logo from "../../Assest/Fssai-footer.png";   // ← Agar GST logo hai to isko change kar dena
+import Logo from "../../Assest/Footer.png";   
 import azadi from "../../Assest/azadi.png";
 
 export default function MainFooter() {
