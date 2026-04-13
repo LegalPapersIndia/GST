@@ -3,7 +3,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { FaArrowUp, FaEnvelope, FaPhoneAlt } from "react-icons/fa";
 
-import Logo from "../../Assest/Footer.png";   
+import Logo from "../../Assest/Bottom.png";   
 import azadi from "../../Assest/azadi.png";
 
 export default function MainFooter() {
