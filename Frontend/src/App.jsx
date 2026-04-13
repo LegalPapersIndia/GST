@@ -5,7 +5,7 @@ import { FaArrowUp } from 'react-icons/fa';
 
 import TopBar from './components/Header/HeaderTop';
 import Navbar from './components/Header/Navbar';
-import FssaiRegistrationForm from './components/Form/RegistrationForm'; // ← Isme bhi GST form banana padega
+import FssaiRegistrationForm from './components/Form/RegistrationForm'; 
 import InstructionsSidebar from './components/Form/InstructionsSidebar';
 import ProcedureSection from './components/Sections/ProcedureSection';
 import BenefitsSection from './components/Sections/BenefitsSection';

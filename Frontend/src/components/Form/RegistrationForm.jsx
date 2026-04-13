@@ -86,7 +86,7 @@ const initialFormData = {
   pin: "",
 };
 
-export default function GSTRegistrationForm() {
+export default function RegistrationForm() {
   const [formData, setFormData] = useState(initialFormData);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
