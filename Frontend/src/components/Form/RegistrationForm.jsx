@@ -1,4 +1,4 @@
-// src/components/Form/GSTRegistrationForm.jsx   ← Recommended new name
+// src/components/Form/GSTRegistrationForm.jsx
 
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
@@ -8,84 +8,36 @@ import GradientButton from "../common/GradientButton";
 const applicationTypes = ["New Registration", "Modification", "Cancellation"];
 
 const businessTypes = [
-  "Manufacturer",
-  "Trader",
-  "Wholesaler",
-  "Retailer",
-  "Importer",
-  "Exporter",
-  "Service Provider",
-  "Distributor",
-  "E-commerce Seller",
-  "Job Worker",
-  "Supplier",
-  "Hotel / Restaurant",
-  "Professional Services",
-  "Freelancer",
-  "Others",
+  "Manufacturer", "Trader", "Wholesaler", "Retailer", "Importer", "Exporter",
+  "Service Provider", "Distributor", "E-commerce Seller", "Job Worker",
+  "Supplier", "Hotel / Restaurant", "Professional Services", "Freelancer", "Others",
 ];
 
 const designationOptions = [
-  "INDIVIDUAL",
-  "Proprietorship",
-  "Partnership Firm",
-  "Limited Liability Partnership (LLP)",
-  "Private Limited Company",
-  "One Person Company (OPC)",
-  "Public Limited Company",
-  "Hindu Undivided Family (HUF)",
-  "Trust",
-  "Society",
-  "Section 8 Company",
-  "Govt. Undertaking",
+  "INDIVIDUAL", "Proprietorship", "Partnership Firm", "Limited Liability Partnership (LLP)",
+  "Private Limited Company", "One Person Company (OPC)", "Public Limited Company",
+  "Hindu Undivided Family (HUF)", "Trust", "Society", "Section 8 Company", "Govt. Undertaking",
 ];
 
 const indianStates = [
-  "Andaman and Nicobar Islands",
-  "Andhra Pradesh",
-  "Arunachal Pradesh",
-  "Assam",
-  "Bihar",
-  "Chandigarh",
-  "Chhattisgarh",
-  "Dadra and Nagar Haveli and Daman and Diu",
-  "Delhi",
-  "Goa",
-  "Gujarat",
-  "Haryana",
-  "Himachal Pradesh",
-  "Jammu and Kashmir",
-  "Jharkhand",
-  "Karnataka",
-  "Kerala",
-  "Ladakh",
-  "Lakshadweep",
-  "Madhya Pradesh",
-  "Maharashtra",
-  "Manipur",
-  "Meghalaya",
-  "Mizoram",
-  "Nagaland",
-  "Odisha",
-  "Puducherry",
-  "Punjab",
-  "Rajasthan",
-  "Sikkim",
-  "Tamil Nadu",
-  "Telangana",
-  "Tripura",
-  "Uttar Pradesh",
-  "Uttarakhand",
-  "West Bengal"
+  "Andaman and Nicobar Islands", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar",
+  "Chandigarh", "Chhattisgarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Goa",
+  "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka",
+  "Kerala", "Ladakh", "Lakshadweep", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya",
+  "Mizoram", "Nagaland", "Odisha", "Puducherry", "Punjab", "Rajasthan", "Sikkim",
+  "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"
 ];
 
 const initialFormData = {
   application_type: "",
   applicant_name: "",
+  entity_name: "",
+  pan_number: "",
   email: "",
   mobile: "",
   nature_of_business: "",
   designation: "",
+  address1: "",
   house_no: "",
   area_locality: "",
   city: "",
@@ -107,10 +59,13 @@ export default function RegistrationForm() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     let processedValue = value;
+
     if (name === "mobile") processedValue = value.replace(/\D/g, "").slice(0, 10);
     if (name === "pin") processedValue = value.replace(/\D/g, "").slice(0, 6);
-    
+    if (name === "pan_number") processedValue = value.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 10);
+
     setFormData((prev) => ({ ...prev, [name]: processedValue }));
+
     if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
     if (formAlert) setFormAlert(null);
   };
@@ -145,16 +100,23 @@ export default function RegistrationForm() {
 
     if (!formData.application_type) newErrors.application_type = "Required";
     if (!formData.applicant_name.trim()) newErrors.applicant_name = "Required";
+    if (!formData.address1.trim()) newErrors.address1 = "Address 1 is required";
     if (!formData.email) newErrors.email = "Required";
     else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Invalid email";
+    
     if (!formData.mobile) newErrors.mobile = "Required";
     else if (!/^[6-9]\d{9}$/.test(formData.mobile))
       newErrors.mobile = "10 digits starting with 6-9";
+
     if (!formData.nature_of_business) newErrors.nature_of_business = "Required";
     if (!formData.designation) newErrors.designation = "Required";
-    if (!formData.state) newErrors.state = "Required";
+    if (!formData.state) newErrors.state = "State is required";   // ← Clear error message
+
     if (formData.pin && !/^\d{6}$/.test(formData.pin))
       newErrors.pin = "6 digits required";
+
+    if (formData.pan_number && !/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(formData.pan_number))
+      newErrors.pan_number = "Invalid PAN format (e.g. ABCDE1234F)";
 
     setErrors(newErrors);
 
@@ -167,104 +129,100 @@ export default function RegistrationForm() {
     return Object.keys(newErrors).length === 0;
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setFormAlert(null);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setFormAlert(null);
 
-  if (!validateForm()) {
-    setFormAlert({
-      type: "error",
-      message: "Please fill all required fields correctly.",
-    });
-    setTimeout(() => {
-      if (firstErrorRef.current) {
-        firstErrorRef.current.focus();
-        firstErrorRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
-    }, 150);
-    return;
-  }
-
-  setLoading(true);
-
-  const payload = {
-    "ctl00$ContentPlaceHolder1$ddlApplicationType": formData.application_type || "",
-    "ctl00$ContentPlaceHolder1$txtName": formData.applicant_name.trim() || "",
-    "ctl00$ContentPlaceHolder1$txtEmail": formData.email.trim() || "",
-    "ctl00$ContentPlaceHolder1$txtPhone1": formData.mobile || "",
-    "ctl00$ContentPlaceHolder1$ddlNatureBusiness": formData.nature_of_business || "",
-    "ctl00$ContentPlaceHolder1$ddlDesignition": formData.designation || "",
-    "ctl00$ContentPlaceHolder1$txtHOUSE": formData.house_no.trim() || "",
-    "ctl00$ContentPlaceHolder1$txtAreaLocality": formData.area_locality.trim() || "",
-    "ctl00$ContentPlaceHolder1$txtCity": formData.city.trim() || "",
-    "ctl00$ContentPlaceHolder1$txtDistrict": formData.district.trim() || "",
-    "ctl00$ContentPlaceHolder1$ddlState": formData.state || "",
-    "ctl00$ContentPlaceHolder1$txtPin": formData.pin || "",
-    "ctl00$ContentPlaceHolder1$txtDate": new Date().toISOString().slice(0, 19).replace("T", " "),
-
-    serviceCategory: "gstReg",
-    leadSource: "gstregistration.org",
-    _timestamp: Date.now(),
-    _formVersion: "2026-04",
-  };
-
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
-
-  try {
-    // Dono requests parallel mein bhej rahe hain
-    const backendPromise = fetch(`${API_URL}/leadRoutes`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    }).catch(err => {
-      console.warn("⚠️ Backend save failed:", err);
-      return { ok: false, status: 0 };
-    });
-
-    const crmPromise = fetch("https://legalpapers.konceptsoftwaresolutions.com/leadRoutes", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams(payload).toString(),
-    }).catch(err => {
-      console.warn("⚠️ CRM submission failed:", err);
-      return { ok: false, status: 0 };
-    });
-
-    // Dono requests ko wait karte hain
-    const [backendRes, crmRes] = await Promise.all([backendPromise, crmPromise]);
-
-    // Success condition: Agar kisi ek mein bhi success ho toh payment page par le jaao
-    const isBackendSuccess = backendRes.ok;
-    const isCrmSuccess = crmRes.ok;
-
-    if (!isBackendSuccess && !isCrmSuccess) {
-      throw new Error("Both backend and CRM failed");
+    if (!validateForm()) {
+      setFormAlert({
+        type: "error",
+        message: "Please fill all required fields correctly.",
+      });
+      setTimeout(() => {
+        if (firstErrorRef.current) {
+          firstErrorRef.current.focus();
+          firstErrorRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }, 150);
+      return;
     }
 
-    // At least one succeeded → Save data & redirect to payment
-    sessionStorage.setItem("gstSubmittedData", JSON.stringify(payload));
-    sessionStorage.removeItem("gstFormDraft");
+    setLoading(true);
 
-    setSubmitStatus({
-      type: "success",
-      message: "Application submitted successfully!",
-    });
+    const payload = {
+      "ctl00$ContentPlaceHolder1$ddlApplicationType": formData.application_type || "",
+      "ctl00$ContentPlaceHolder1$txtName": formData.applicant_name.trim() || "",
+      "ctl00$ContentPlaceHolder1$txtEntityName": formData.entity_name.trim() || "",
+      "ctl00$ContentPlaceHolder1$txtPAN": formData.pan_number || "",
+      "ctl00$ContentPlaceHolder1$txtAddress1": formData.address1.trim() || "",
+      "ctl00$ContentPlaceHolder1$txtEmail": formData.email.trim() || "",
+      "ctl00$ContentPlaceHolder1$txtPhone1": formData.mobile || "",
+      "ctl00$ContentPlaceHolder1$ddlNatureBusiness": formData.nature_of_business || "",
+      "ctl00$ContentPlaceHolder1$ddlDesignition": formData.designation || "",
+      "ctl00$ContentPlaceHolder1$txtHOUSE": formData.house_no.trim() || "",
+      "ctl00$ContentPlaceHolder1$txtAreaLocality": formData.area_locality.trim() || "",
+      "ctl00$ContentPlaceHolder1$txtCity": formData.city.trim() || "",
+      "ctl00$ContentPlaceHolder1$txtDistrict": formData.district.trim() || "",
+      "ctl00$ContentPlaceHolder1$ddlState": formData.state || "",
+      "ctl00$ContentPlaceHolder1$txtPin": formData.pin || "",
+      "ctl00$ContentPlaceHolder1$txtDate": new Date().toISOString().slice(0, 19).replace("T", " "),
 
-    // Redirect to payment page after short delay
-    setTimeout(() => {
-      navigate("/payment-summary");
-    }, 1000);
+      serviceCategory: "gstReg",
+      leadSource: "gstregistration.org",
+      _timestamp: Date.now(),
+      _formVersion: "2026-04",
+    };
 
-  } catch (err) {
-    console.error("Submission failed:", err);
-    setSubmitStatus({
-      type: "error",
-      message: "Something went wrong. Please try again later.",
-    });
-  } finally {
-    setLoading(false);
-  }
-};
+    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+    try {
+      const backendPromise = fetch(`${API_URL}/leadRoutes`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      }).catch(err => {
+        console.warn("⚠️ Backend save failed:", err);
+        return { ok: false };
+      });
+
+      const crmPromise = fetch("https://legalpapers.konceptsoftwaresolutions.com/leadRoutes", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(payload).toString(),
+      }).catch(err => {
+        console.warn("⚠️ CRM submission failed:", err);
+        return { ok: false };
+      });
+
+      const [backendRes, crmRes] = await Promise.all([backendPromise, crmPromise]);
+
+      if (!backendRes.ok && !crmRes.ok) {
+        throw new Error("Both backend and CRM failed");
+      }
+
+      sessionStorage.setItem("gstSubmittedData", JSON.stringify(payload));
+      sessionStorage.removeItem("gstFormDraft");
+
+      setSubmitStatus({
+        type: "success",
+        message: "Application submitted successfully!",
+      });
+
+      setTimeout(() => {
+        navigate("/payment-summary");
+      }, 1000);
+
+    } catch (err) {
+      console.error("Submission failed:", err);
+      setSubmitStatus({
+        type: "error",
+        message: "Something went wrong. Please try again later.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div id="registration-form" className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200/80 max-w-4xl mx-auto">
       <div className="bg-gradient-to-r from-blue-700 to-indigo-800 text-white py-6 text-center text-2xl md:text-3xl font-bold tracking-wide shadow-md">
@@ -312,7 +270,27 @@ const handleSubmit = async (e) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
-            label="3. Email ID"
+            label="3. Entity Name (Optional)"
+            name="entity_name"
+            value={formData.entity_name}
+            onChange={handleChange}
+            placeholder="Company / Firm / Business Name"
+          />
+
+          <FormField
+            label="4. PAN Number (Optional)"
+            name="pan_number"
+            value={formData.pan_number}
+            onChange={handleChange}
+            placeholder="ABCDE1234F"
+            maxLength={10}
+            error={errors.pan_number}
+          />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <FormField
+            label="5. Email ID"
             name="email"
             type="email"
             value={formData.email}
@@ -323,7 +301,7 @@ const handleSubmit = async (e) => {
           />
 
           <FormField
-            label="4. Mobile Number"
+            label="6. Mobile Number"
             name="mobile"
             value={formData.mobile}
             onChange={handleChange}
@@ -335,7 +313,7 @@ const handleSubmit = async (e) => {
         </div>
 
         <FormField
-          label="5. Nature of Business (व्यवसाय की प्रकृति)"
+          label="7. Nature of Business (व्यवसाय की प्रकृति)"
           name="nature_of_business"
           type="select"
           options={businessTypes}
@@ -346,7 +324,7 @@ const handleSubmit = async (e) => {
         />
 
         <FormField
-          label="6. Designation / Type of Organization (संगठन का प्रकार)"
+          label="8. Designation / Type of Organization (संगठन का प्रकार)"
           name="designation"
           type="select"
           options={designationOptions}
@@ -356,19 +334,32 @@ const handleSubmit = async (e) => {
           error={errors.designation}
         />
 
+        {/* Business Address Section */}
         <div className="space-y-6 bg-gray-50 p-6 rounded-xl border border-gray-200">
           <label className="block text-lg font-semibold text-gray-800">
-            7. Business Address (व्यवसाय का पता)
+            9. Business Address (व्यवसाय का पता)
           </label>
+
+          <FormField
+            label="Address Line 1"
+            name="address1"
+            value={formData.address1}
+            onChange={handleChange}
+            required
+            placeholder="Flat No. / Shop No. / Building Name / Street"
+            error={errors.address1}
+          />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <FormField
+              label="Address Line 2"
               name="house_no"
               placeholder="House / Shop No. / Flat No."
               value={formData.house_no}
               onChange={handleChange}
             />
             <FormField
+              label="Area / Locality"
               name="area_locality"
               placeholder="Area / Locality / Street / Village"
               value={formData.area_locality}
@@ -390,6 +381,7 @@ const handleSubmit = async (e) => {
               onChange={handleChange}
             />
             <FormField
+              label="State"          
               name="state"
               type="select"
               options={indianStates}

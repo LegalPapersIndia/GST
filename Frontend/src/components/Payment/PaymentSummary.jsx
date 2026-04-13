@@ -6,7 +6,9 @@ function Detail({ label, value }) {
   return (
     <div className="flex flex-col sm:flex-row justify-between py-3 border-b border-gray-200 last:border-0">
       <span className="font-semibold text-gray-700 min-w-[180px]">{label}:</span>
-      <span className="text-gray-900 font-medium break-words">{value || "—"}</span>
+      <span className="text-gray-900 font-medium break-words text-right sm:text-left">
+        {value || "—"}
+      </span>
     </div>
   );
 }
@@ -50,7 +52,7 @@ export default function PaymentSummary() {
   // Single Payment Option for GST
   const paymentOption = {
     amount: "₹ 5,999",
-    link: "#",                    // ← Yahan apna actual Instamojo / Razorpay link daal dena
+    link: "#",                    // ← Replace with your actual Razorpay / Instamojo link
     title: "Complete GST Registration Package"
   };
 
@@ -62,9 +64,9 @@ export default function PaymentSummary() {
     window.location.href = paymentOption.link;
   };
 
-  const getValue = (longKey) => {
+  const getValue = (key) => {
     if (!formData) return "—";
-    return formData[longKey] || "—";
+    return formData[key] || "—";
   };
 
   if (error) {
@@ -87,6 +89,19 @@ export default function PaymentSummary() {
     );
   }
 
+  // Build full address
+  const fullAddress = [
+    getValue("ctl00$ContentPlaceHolder1$txtAddress1"),     // New: Address Line 1 (Mandatory)
+    getValue("ctl00$ContentPlaceHolder1$txtHOUSE"),        // Address Line 2
+    getValue("ctl00$ContentPlaceHolder1$txtAreaLocality"),
+    getValue("ctl00$ContentPlaceHolder1$txtCity"),
+    getValue("ctl00$ContentPlaceHolder1$txtDistrict"),
+    getValue("ctl00$ContentPlaceHolder1$ddlState"),
+    getValue("ctl00$ContentPlaceHolder1$txtPin") 
+      ? `Pin: ${getValue("ctl00$ContentPlaceHolder1$txtPin")}` 
+      : "",
+  ].filter(Boolean).join(", ");
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-sky-50 py-12 px-4 sm:px-6 lg:px-12">
       <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
@@ -105,34 +120,29 @@ export default function PaymentSummary() {
           </h2>
 
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-            {/* Left Column */}
+            {/* Left Column - Personal & Business Info */}
             <div className="space-y-6 bg-gray-50 p-6 lg:p-8 rounded-2xl">
               <Detail label="Application Type" value={getValue("ctl00$ContentPlaceHolder1$ddlApplicationType")} />
               <Detail label="Applicant Name" value={getValue("ctl00$ContentPlaceHolder1$txtName")} />
+              <Detail label="Entity Name" value={getValue("ctl00$ContentPlaceHolder1$txtEntityName")} />
+              <Detail label="PAN Number" value={getValue("ctl00$ContentPlaceHolder1$txtPAN")} />
               <Detail label="Email ID" value={getValue("ctl00$ContentPlaceHolder1$txtEmail")} />
               <Detail label="Mobile Number" value={getValue("ctl00$ContentPlaceHolder1$txtPhone1")} />
               <Detail label="Designation / Type of Organization" value={getValue("ctl00$ContentPlaceHolder1$ddlDesignition")} />
               <Detail label="Nature of Business" value={getValue("ctl00$ContentPlaceHolder1$ddlNatureBusiness")} />
             </div>
 
-            {/* Right Column */}
+            {/* Right Column - Address */}
             <div className="space-y-6 bg-gray-50 p-6 lg:p-8 rounded-2xl">
-              <Detail
-                label="Business Address"
-                value={[
-                  getValue("ctl00$ContentPlaceHolder1$txtHOUSE"),
-                  getValue("ctl00$ContentPlaceHolder1$txtAreaLocality"),
-                  getValue("ctl00$ContentPlaceHolder1$txtCity"),
-                  getValue("ctl00$ContentPlaceHolder1$txtDistrict"),
-                  getValue("ctl00$ContentPlaceHolder1$ddlState"),
-                  getValue("ctl00$ContentPlaceHolder1$txtPin") ? ` - ${getValue("ctl00$ContentPlaceHolder1$txtPin")}` : "",
-                ].filter(Boolean).join(", ") || "—"}
+              <Detail 
+                label="Business Address" 
+                value={fullAddress || "—"} 
               />
             </div>
           </div>
         </div>
 
-        {/* Single Payment Section */}
+        {/* Payment Section */}
         <div className="p-8 md:p-12 bg-gray-50 border-t border-gray-100">
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
