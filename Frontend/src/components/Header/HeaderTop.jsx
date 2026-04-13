@@ -82,7 +82,7 @@ export default function HeaderTop({ handleScroll }) {
             {/* Title Text */}
             <div>
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-blue-950">
-                GST Registration CONSULTANCY Portal
+                GST Registration Consultancy Portal
               </h1>
               <div className="mt-1">
                 <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight text-blue-950">
