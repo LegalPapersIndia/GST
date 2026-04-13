@@ -8,7 +8,6 @@ import azadi from "../../Assest/azadi.png";
 
 export default function MainFooter() {
   const navigate = useNavigate();
-
   return (
     <footer className="bg-gradient-to-b from-[#0f244a] via-[#142e4f] to-[#0d1b3a] text-gray-300 pt-12 pb-10 relative overflow-hidden">
       {/* Blue Top Border */}
