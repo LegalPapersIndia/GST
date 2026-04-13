@@ -11,7 +11,7 @@ const limiter = rateLimit({
 });
 
 // ======================
-// Public Form Submission - Database Save Only
+// Public Form Submission - ONLY Database Save
 // ======================
 router.post('/leadRoutes', limiter, async (req, res) => {
   const payload = req.body;
@@ -43,7 +43,7 @@ router.post('/leadRoutes', limiter, async (req, res) => {
 
     await lead.save();
 
-    console.log(`✅ GST Lead Saved in DB: ${lead.applicant_name || 'Unknown'}`);
+    console.log(`✅ GST Lead Saved in Database: ${lead.applicant_name || 'Unknown'}`);
 
     res.status(200).json({ 
       success: true, 
@@ -60,7 +60,7 @@ router.post('/leadRoutes', limiter, async (req, res) => {
 });
 
 // ======================
-// Admin Route - View Leads
+// Admin Route - View All Leads
 // ======================
 const adminAuth = require('../middleware/adminAuth');
 
@@ -69,7 +69,7 @@ router.get('/api/leads', adminAuth, async (req, res) => {
     const leads = await Lead.find().sort({ submittedAt: -1 });
     res.json(leads);
   } catch (err) {
-    console.error('Error fetching leads:', err);
+    console.error('❌ Error fetching leads:', err);
     res.status(500).json({ error: 'Failed to fetch leads' });
   }
 });
