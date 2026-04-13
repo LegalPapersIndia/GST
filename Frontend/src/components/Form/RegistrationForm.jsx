@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import FormField from "./FormField";
 import GradientButton from "../common/GradientButton";
 
-const applicationTypes = ["New Registration", "Modification", "Renewal"];
+const applicationTypes = ["New Registration", "Modification", "Cancellation"];
 
 const businessTypes = [
   "Manufacturer",

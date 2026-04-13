@@ -110,7 +110,7 @@ function AppContent() {
           navItems={[
             { label: "GST REGISTRATION", to: "#registration-form" },
             { label: "GST MODIFICATION", to: "#registration-form" },
-            { label: "GST RENEWAL / UPDATE", to: "#registration-form" },
+            { label: "GST Cancellation", to: "#registration-form" },
             { label: "PROCEDURE", to: "#procedure" },
             { label: "DOCUMENTS", to: "#documents" },     // Documents section ke liye
             { label: "BENEFITS", to: "#benefits" },

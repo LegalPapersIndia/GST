@@ -59,9 +59,7 @@ router.post('/leadRoutes', limiter, async (req, res) => {
   }
 });
 
-// ======================
-// Admin Route - View All Leads
-// ======================
+
 const adminAuth = require('../middleware/adminAuth');
 
 router.get('/api/leads', adminAuth, async (req, res) => {
