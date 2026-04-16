@@ -23,6 +23,7 @@ import ScrollToHash from './components/common/ScrollToHash';
 import AdminDashboard from './components/Admin/AdminDashboard';
 import AdminLogin from './components/Admin/AdminLogin';
 import DocumentsRequiredSection from './components/Sections/DocumentsRequiredSection';
+import GSTAboutUsPage from './components/Pages/About';
 
 // ✅ Clear storage
 function ClearStorageOnLoad() {
@@ -59,11 +60,11 @@ function PrivateConsultancyMarquee() {
       <div className="marquee-container relative w-full">
         <div className="marquee inline-flex whitespace-nowrap text-sm font-medium tracking-wide animate-marquee">
           <span className="mx-16">
-            This is a private consultancy self-registration portal for GST Registration. 
+            This is a private consultancy self-registration portal Owned By <b>EASQUES</b> for GST Registration. 
             Portal fees are consultancy in nature.
           </span>
           <span className="mx-16">
-            This is a private consultancy self-registration portal for GST Registration. 
+            This is a private consultancy self-registration portal Owned By <b>EASQUES</b> for GST Registration. 
             Portal fees are consultancy in nature.
           </span>
         </div>
@@ -111,6 +112,7 @@ function AppContent() {
             { label: "GST REGISTRATION", to: "#registration-form" },
             { label: "GST MODIFICATION", to: "#registration-form" },
             { label: "GST CANCELLATION", to: "#registration-form" },
+            { label: "ABOUT US", to: "/about" },
             { label: "PROCEDURE", to: "#procedure" },
             { label: "DOCUMENTS", to: "#documents" },     // Documents section ke liye
             { label: "BENEFITS", to: "#benefits" },
@@ -188,6 +190,7 @@ function AppContent() {
 
           <Route path="/refund-policy" element={<RefundPolicyPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path='/about' element={<GSTAboutUsPage/>} />
           <Route path="/term-condition" element={<TermsAndConditionsPage />} />
           <Route path="/privacy-policy" element={<FSSAIPolicyPage />} />
           <Route path="/disclaimer" element={<DisclaimerPage />} />

@@ -27,14 +27,11 @@ export default function MainFooter() {
               <span className="font-semibold text-sky-400">
                 PRIVATE CONSULTANCY
               </span>{" "}
-              portal. We provide professional assistance for{" "}
+              portal Owned by <b>EASQUES</b>. We provide professional assistance for{" "}
               <b>GST Registration</b>, application filing,
               document preparation and compliance support.
             </p>
 
-            <p className="text-xs opacity-80 mt-4">
-              © {new Date().getFullYear()} GST Registration Portal. All Rights Reserved.
-            </p>
           </div>
 
           {/* Quick Links */}
@@ -82,6 +79,7 @@ export default function MainFooter() {
                 { name: "Contact Us", path: "/contact" },
                 { name: "Refund Policy", path: "/refund-policy" },
                 { name: "Terms & Conditions", path: "/term-condition" },
+                { name: "About Us", path: "/about" },
                 { name: "Privacy Policy", path: "/privacy-policy" },
                 { name: "Disclaimer", path: "/disclaimer" },
               ].map((item) => (
