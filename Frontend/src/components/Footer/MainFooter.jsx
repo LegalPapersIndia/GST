@@ -28,7 +28,7 @@ export default function MainFooter() {
                 PRIVATE CONSULTANCY
               </span>{" "}
               portal Owned by <b>EASQUES</b>. We provide professional assistance for{" "}
-              <b>GST Registration</b>, application filing,
+              <b> Registration</b>, application filing,
               document preparation and compliance support.
             </p>
 
@@ -42,9 +42,9 @@ export default function MainFooter() {
 
             <ul className="space-y-2.5 text-sm">
               {[
-                { name: "Apply for GST Registration", hash: "registration-form" },
-                { name: "GST Modification", hash: "registration-form" },
-                { name: "GST Renewal / Update", hash: "registration-form" },
+                { name: "Apply for Registration", hash: "registration-form" },
+                { name: "Registration Modification", hash: "registration-form" },
+                { name: "Registration Renewal / Update", hash: "registration-form" },
                 { name: "Procedure", hash: "procedure" },
                 { name: "Documents Required", hash: "documents" },
                 { name: "Benefits", hash: "benefits" },
@@ -98,7 +98,7 @@ export default function MainFooter() {
             <div className="mt-6 space-y-2.5 text-sm">
               <p className="flex items-center gap-3">
                 <FaEnvelope className="text-blue-400 text-lg" />
-                info@gstregistration.org
+                info@gstindia-registration.org
               </p>
 
               <p className="flex items-center gap-3">
@@ -127,7 +127,7 @@ export default function MainFooter() {
               <div className="relative group">
                 <img
                   src={Logo}
-                  alt="GST Registration Portal"
+                  alt="Registration Portal"
                   className="h-20 w-20 sm:h-26 sm:w-26 md:h-30 md:w-30 lg:h-36 lg:w-36 object-contain"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-blue-500/20 to-transparent opacity-0 group-hover:opacity-70 transition-opacity rounded-full blur-sm"></div>
@@ -150,7 +150,7 @@ export default function MainFooter() {
         {/* Copyright Line */}
         <div className="mt-6 pt-4 border-t border-gray-600/30 text-center">
           <p className="text-xs text-gray-400">
-            Copyright © 2026 GST Registration Portal | All Rights Reserved | 
+            Copyright © 2026 Registration Portal | All Rights Reserved | 
             Website Design, Developed &amp; Google Promotion by{" "}
             <span className="text-gray-300 font-medium">EASQUES</span>.
           </p>
