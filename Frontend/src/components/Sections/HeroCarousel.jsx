@@ -83,11 +83,11 @@ export default function HeroCarousel() {
       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-800 text-white py-3 overflow-hidden shadow-inner z-20">
         <div className="marquee whitespace-nowrap text-sm sm:text-base font-medium">
           <span className="inline-block px-12">
-            This is a private consultancy portal for GST Registration. 
+           ⚠️ This is a private consultancy portal for GST Registration. 
             Portal fees are consultancy charges only. • Government fees extra as applicable.
           </span>
           <span className="inline-block px-12">
-            This is a private consultancy portal for GST Registration. 
+           ⚠️ This is a private consultancy portal for GST Registration. 
             Portal fees are consultancy charges only. • Government fees extra as applicable.
           </span>
         </div>

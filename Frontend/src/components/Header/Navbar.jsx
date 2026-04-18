@@ -72,12 +72,6 @@ export default function Navbar({ navItems, handleScroll }) {
               </div>
             </div>
           )}
-
-          {/* GST Portal Badge */}
-          <div className="hidden sm:flex items-center bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-medium text-white border border-white/30">
-            GST REGISTRATION PORTAL
-          </div>
-
         </div>
       </div>
     </nav>
