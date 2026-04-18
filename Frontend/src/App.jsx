@@ -24,6 +24,7 @@ import AdminDashboard from './components/Admin/AdminDashboard';
 import AdminLogin from './components/Admin/AdminLogin';
 import DocumentsRequiredSection from './components/Sections/DocumentsRequiredSection';
 import GSTAboutUsPage from './components/Pages/About';
+import GSTTrainingWebinarSection from './components/Sections/Training';
 
 // ✅ Clear storage
 function ClearStorageOnLoad() {
@@ -169,6 +170,7 @@ function AppContent() {
                 <div className="mx-auto max-w-screen-2xl mt-16 space-y-20">
                   <ProcedureSection />
                   <DocumentsRequiredSection id="documents" />   {/* id add kiya navbar ke liye */}
+                  <GSTTrainingWebinarSection />
                   <BenefitsSection />
                   <FaqSection />
                 </div>

@@ -168,7 +168,7 @@ export default function RegistrationForm() {
       "ctl00$ContentPlaceHolder1$txtDate": new Date().toISOString().slice(0, 19).replace("T", " "),
 
       serviceCategory: "gstReg",
-      leadSource: "gstregistration.org",
+      leadSource: "gstindia-registration.org",
       _timestamp: Date.now(),
       _formVersion: "2026-04",
     };
