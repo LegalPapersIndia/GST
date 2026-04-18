@@ -115,6 +115,7 @@ function AppContent() {
             { label: "CANCELLATION", to: "#registration-form" },
             { label: "ABOUT US", to: "/about" },
             { label: "PROCEDURE", to: "#procedure" },
+            { label: "TRAINING & Webinar", to: "#training" },
             { label: "DOCUMENTS", to: "#documents" },     // Documents section ke liye
             { label: "BENEFITS", to: "#benefits" },
             { label: "FAQ'S", to: "#faq" },

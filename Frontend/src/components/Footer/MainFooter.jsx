@@ -46,6 +46,7 @@ export default function MainFooter() {
                 { name: "Registration Modification", hash: "registration-form" },
                 { name: "Registration Renewal / Update", hash: "registration-form" },
                 { name: "Procedure", hash: "procedure" },
+                { name: "Training & Webinars", hash: "training" },
                 { name: "Documents Required", hash: "documents" },
                 { name: "Benefits", hash: "benefits" },
                 { name: "FAQs", hash: "faq" },
