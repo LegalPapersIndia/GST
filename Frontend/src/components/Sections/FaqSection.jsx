@@ -18,7 +18,7 @@ export default function GSTFAQSection() {
           <p>
             Goods and Services Tax (GST) is one of the most important tax reforms in India. 
             It has simplified the indirect taxation system and brought transparency in business operations. 
-            Many businesses and individuals have common questions regarding GST registration, compliance, 
+            Many businesses and individuals have common questions regarding registration, compliance, 
             and filing procedures.
           </p>
         </div>

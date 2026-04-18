@@ -28,7 +28,7 @@ import GSTAboutUsPage from './components/Pages/About';
 // ✅ Clear storage
 function ClearStorageOnLoad() {
   useEffect(() => {
-    localStorage.removeItem("fssaiFormDraft"); // Agar GST form ka alag key hai to change kar dena
+    localStorage.removeItem("fssaiFormDraft"); 
     sessionStorage.removeItem("fssaiSubmittedData");
     console.log("✅ Storage cleared on app initial load");
   }, []);
@@ -60,11 +60,11 @@ function PrivateConsultancyMarquee() {
       <div className="marquee-container relative w-full">
         <div className="marquee inline-flex whitespace-nowrap text-sm font-medium tracking-wide animate-marquee">
           <span className="mx-16">
-            This is a private consultancy self-registration portal Owned By <b>EASQUES</b> for GST Registration. 
+           ⚠️ This is a private consultancy self-registration portal Owned By <b>EASQUES</b> for Registration. 
             Portal fees are consultancy in nature.
           </span>
           <span className="mx-16">
-            This is a private consultancy self-registration portal Owned By <b>EASQUES</b> for GST Registration. 
+           ⚠️ This is a private consultancy self-registration portal Owned By <b>EASQUES</b> for  Registration. 
             Portal fees are consultancy in nature.
           </span>
         </div>
@@ -109,9 +109,9 @@ function AppContent() {
       {isHome && (
         <Navbar
           navItems={[
-            { label: "GST REGISTRATION", to: "#registration-form" },
-            { label: "GST MODIFICATION", to: "#registration-form" },
-            { label: "GST CANCELLATION", to: "#registration-form" },
+            { label: "REGISTRATION", to: "#registration-form" },
+            { label: "MODIFICATION", to: "#registration-form" },
+            { label: "CANCELLATION", to: "#registration-form" },
             { label: "ABOUT US", to: "/about" },
             { label: "PROCEDURE", to: "#procedure" },
             { label: "DOCUMENTS", to: "#documents" },     // Documents section ke liye

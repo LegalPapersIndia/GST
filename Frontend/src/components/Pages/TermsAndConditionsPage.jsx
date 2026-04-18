@@ -65,7 +65,7 @@ export default function TermsAndConditionsPage() {
 
             <p className="text-gray-700 leading-relaxed">
               Certain information on this website may be sourced from third-party providers
-              or government websites including the official GST Portal (gst.gov.in).
+              or government websites.
               Such information is provided for general informational purposes only.
             </p>
 
@@ -146,12 +146,12 @@ export default function TermsAndConditionsPage() {
             </p>
 
             <ul className="list-disc pl-6 space-y-2 text-gray-700">
-              <li>New GST Registration</li>
-              <li>GST Registration under Composition Scheme</li>
-              <li>Regular GST Registration</li>
-              <li>GST Modification / Amendment</li>
-              <li>GST Cancellation</li>
-              <li>GST Compliance and Filing Assistance</li>
+              <li>New Registration</li>
+              <li>Registration under Composition Scheme</li>
+              <li>Regular Registration</li>
+              <li>Modification / Amendment</li>
+              <li>Cancellation</li>
+              <li>Compliance and Filing Assistance</li>
             </ul>
 
             <p className="text-gray-700 leading-relaxed mt-4">
